@@ -11,6 +11,8 @@ app.use(morgan('common'));
 // requests to HTTP requests to `/blog-posts` to `blogPostsRouter`
 app.use('/blog-posts', blogPostsRouter);
 
-app.listen(process.env.PORT || 8080, () => {
+const server = app.listen(process.env.PORT || 8080, () => {
   console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
 });
+
+module.exports = server;
