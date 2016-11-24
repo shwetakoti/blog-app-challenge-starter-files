@@ -7,11 +7,11 @@ chai.use(chaiHttp);
 
 let server;
 
-beforeEach(function() {
+beforeEach('bootstrap server', function() {
   server = require('../server');
 });
 
-afterEach(function() {
+afterEach('close server', function() {
   server.close();
 });
 
