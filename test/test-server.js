@@ -21,7 +21,7 @@ describe('Blog Posts', function() {
   it('should list items on GET', function() {
     return chai.request(app)
       .get('/blog-posts')
-      .end(function(err, res) {
+      .then(function(res) {
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
@@ -45,7 +45,7 @@ describe('Blog Posts', function() {
     return chai.request(app)
       .post('/blog-posts')
       .send(newPost)
-      .end(function(err, res) {
+      .then(function(res) {
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a('object');
@@ -61,7 +61,7 @@ describe('Blog Posts', function() {
     return chai.request(app)
       .post('/blog-posts')
       .send(badRequestData)
-      .end(function(err, res) {
+      .catch(function(res) {
         res.should.have.status(400);
       });
   });
@@ -71,7 +71,7 @@ describe('Blog Posts', function() {
     return chai.request(app)
       // first have to get
       .get('/blog-posts')
-      .end(function(err, res) {
+      .then(function( res) {
         const updatedPost = Object.assign(res.body[0], {
           title: 'connect the dots',
           content: 'la la la la la'
@@ -79,9 +79,8 @@ describe('Blog Posts', function() {
         return chai.request(app)
           .put(`/blog-posts/${res.body[0].id}`)
           .send(updatedPost)
-          .end(function(err, res) {
+          .then(function(res) {
             res.should.have.status(204);
-            res.should.be.json;
           });
       });
   });
@@ -90,10 +89,10 @@ describe('Blog Posts', function() {
     return chai.request(app)
       // first have to get
       .get('/blog-posts')
-      .end(function(err, res) {
+      .then(function(res) {
         return chai.request(app)
           .delete(`/blog-posts/${res.body[0].id}`)
-          .end(function(err, res) {
+          .then(function(res) {
             res.should.have.status(204);
           });
       });
