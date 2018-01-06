@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const should = chai.should();
+const expect = chai.expect;
 
 const {app, runServer, closeServer} = require('../server');
 
@@ -22,13 +22,13 @@ describe('Blog Posts', function() {
     return chai.request(app)
       .get('/blog-posts')
       .then(function(res) {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a('array');
-        res.body.length.should.be.above(0);
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('array');
+        expect(res.body.length).to.be.above(0);
         res.body.forEach(function(item) {
-          item.should.be.a('object');
-          item.should.have.all.keys(
+          expect(item).to.be.a('object');
+          expect(item).to.have.all.keys(
             'id', 'title', 'content', 'author', 'publishDate')
         });
       });
@@ -46,13 +46,13 @@ describe('Blog Posts', function() {
       .post('/blog-posts')
       .send(newPost)
       .then(function(res) {
-        res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.be.a('object');
-        res.body.should.have.all.keys(expectedKeys);
-        res.body.title.should.equal(newPost.title);
-        res.body.content.should.equal(newPost.content);
-        res.body.author.should.equal(newPost.author)
+        expect(res).to.have.status(201);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.all.keys(expectedKeys);
+        expect(res.body.title).to.equal(newPost.title);
+        expect(res.body.content).to.equal(newPost.content);
+        expect(res.body.author).to.equal(newPost.author)
       });
   });
 
@@ -62,7 +62,7 @@ describe('Blog Posts', function() {
       .post('/blog-posts')
       .send(badRequestData)
       .catch(function(res) {
-        res.should.have.status(400);
+        expect(res).to.have.status(400);
       });
   });
 
@@ -80,7 +80,7 @@ describe('Blog Posts', function() {
           .put(`/blog-posts/${res.body[0].id}`)
           .send(updatedPost)
           .then(function(res) {
-            res.should.have.status(204);
+            expect(res).to.have.status(204);
           });
       });
   });
@@ -93,7 +93,7 @@ describe('Blog Posts', function() {
         return chai.request(app)
           .delete(`/blog-posts/${res.body[0].id}`)
           .then(function(res) {
-            res.should.have.status(204);
+            expect(res).to.have.status(204);
           });
       });
   });
