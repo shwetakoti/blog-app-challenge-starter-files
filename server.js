@@ -15,7 +15,7 @@ app.get('/posts',(req,res)=>{
     res.json(posts.map(post=>post.serialize()));
   }).catch(err=>{
     console.error(err);
-    res.status(500).json({"Internal Server Error"});
+    res.status(500).json({message: 'Internal Server Error'});
   });
 });
 
@@ -23,7 +23,7 @@ app.get('/posts',(req,res)=>{
 app.get('/posts/:id',(req,res)=>{
   blogApp.findById(req.params.id).then(post=>post.serialize()).catch(err=>{
     console.error(err);
-    res.status(500).json({"Internal Server Error"});
+    res.status(500).json({message: 'Internal Server Error'});
   });
 });
 
