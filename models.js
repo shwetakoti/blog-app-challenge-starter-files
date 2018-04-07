@@ -12,8 +12,7 @@ const blogAppSchema = mongoose.Schema({
 
 //virtual method
 blogAppSchema.virtual('authorName').get(function(){
-  return `$(this.author.firstName)` `$(this.author.lastName)`
-});
+  return `${this.author.firstName} ${this.author.lastName}`});
 
 //serialize method
 blogAppSchema.methods.serialize = function(){
@@ -26,6 +25,6 @@ blogAppSchema.methods.serialize = function(){
     };
   };
 
-  const blogApp = mongoose.model('blogapp',blogAppSchema);
+  const blogApp = mongoose.model('Blogapp',blogAppSchema,'blogapp');
 
   module.exports = {blogApp};
